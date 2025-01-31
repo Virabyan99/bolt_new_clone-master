@@ -96,7 +96,7 @@ export default config;
       price:19.99
     },
     {
-      name:'Unlimted (License)',
+      name:'Unlimted ',
       tokens:'Unmited',
       value:999999999,
       desc:'Designed for professionals who need to use Bolt a few times per week.',

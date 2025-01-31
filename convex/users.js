@@ -22,7 +22,7 @@ export const CreateUser = mutation({
         email: args.email,
         picture: args.picture,
         uid: args.uid,
-        token: 100000,
+        token: 20000,
       })
       console.log(result)
     }
