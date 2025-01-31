@@ -22,6 +22,7 @@ export const CreateUser = mutation({
         email: args.email,
         picture: args.picture,
         uid: args.uid,
+        token: 100000,
       })
       console.log(result)
     }
@@ -38,5 +39,18 @@ export const GetUser = query({
       .filter((q) => q.eq(q.field('email'), args.email))
       .collect()
     return user[0]
+  },
+})
+
+export const UpdateToken = mutation({
+  args: {
+    token: v.number(),
+    userId: v.id('users'),
+  },
+  handler: async (ctx, args) => {
+    const result = await ctx.db.patch(args.userId, {
+      token: args.token,
+    })
+    return result
   },
 })

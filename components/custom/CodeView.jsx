@@ -16,14 +16,20 @@ import { useConvex, useMutation } from 'convex/react'
 import { Loader } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react'
+import { countToken } from './ChatView'
+import { UserDetailContext } from '@/context/UserDetailContext'
 const CodeView = () => {
   const { id } = useParams()
+  const { userDetail, setUserDetail } = useContext(UserDetailContext)
   const [activeTab, setActiveTab] = useState('code')
   const [files, setFiles] = useState(Lookup?.DEFAULT_FILE)
   const { messages, setMessages } = useContext(MessagesContext)
   const UpdateFiles = useMutation(api.workspace.UpdateFiles)
   const convex = useConvex()
   const [loading, setLoading] = useState(false)
+  const UpdateTokens = useMutation(api.users.UpdateToken)
+
+
 
   useEffect(() => {
     id && GetFiles()
@@ -63,6 +69,14 @@ const CodeView = () => {
       workspaceId: id,
       files: aiResp?.files,
     })
+
+    const token =Number(userDetail?.token) - Number(countToken(JSON.stringify(aiResp)))
+        // Update token to database
+        await UpdateTokens({
+          userId: userDetail?._id,
+          token: token,
+        })
+    setActiveTab('code') // can be changed warning
     setLoading(false)
   }
   return (
