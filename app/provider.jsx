@@ -1,4 +1,6 @@
 'use client'
+import AppSidebar from '@/components/custom/AppSidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { MessagesContext } from '@/context/MessagesContext'
 import { UserDetailContext } from '@/context/UserDetailContext'
 import { api } from '@/convex/_generated/api'
@@ -38,7 +40,10 @@ function Provider({ children }) {
               defaultTheme="dark"
               enableSystem
               disableTransitionOnChange>
-              {children}
+              <SidebarProvider defaultOpen={false}>
+                <AppSidebar />
+                {children}
+              </SidebarProvider>
             </NextThemesProvider>
           </MessagesContext.Provider>
         </UserDetailContext.Provider>

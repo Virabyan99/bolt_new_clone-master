@@ -59,3 +59,17 @@ export const UpdateFiles = mutation({
     return result
   },
 })
+
+export const GetAllWorkspace = query({
+  args: {
+    userId: v.id('users'), // Change the argument name in the validator
+  },
+  handler: async (ctx, args) => {
+    const result = await ctx.db.query('workspaces')
+      .filter((q) => q.eq(q.field('user'), args.userId))  // Now matches the updated argument name
+      .collect();
+
+    return result;
+  },
+});
+
