@@ -22,18 +22,22 @@ const Hero = () => {
     if (!userDetail?.name) {
       setOpenDialog(true)
       return
-    } 
-    const msg= {
+    }
+    if (userDetail?.token < 10) {
+      toast("You don't have enough tokens to generate code")
+      return
+    }
+    const msg = {
       role: 'user',
       content: input,
     }
     setMessages(msg)
     const workspaceId = await CreateWorkspace({
       user: userDetail._id,
-      messages: [msg]
+      messages: [msg],
     })
     console.log(workspaceId)
-    router.push("/workspace/" + workspaceId)
+    router.push('/workspace/' + workspaceId)
   }
 
   return (

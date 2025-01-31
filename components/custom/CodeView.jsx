@@ -76,6 +76,10 @@ const CodeView = () => {
           userId: userDetail?._id,
           token: token,
         })
+        setUserDetail(prev => ({
+          ...prev,
+          token: token
+        }))
     setActiveTab('code') // can be changed warning
     setLoading(false)
   }
