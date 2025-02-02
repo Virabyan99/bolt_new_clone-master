@@ -95,36 +95,41 @@ const ChatView = () => {
   return (
     <div className="relative h-[85vh] flex flex-col">
       <div className="flex-1 overflow-y-scroll scrollbar-hide pl-5 ">
-        {messages?.map((msg, index) => (
-          <div
-            key={index}
-            className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7"
-            style={{
-              backgroundColor: Colors.CHAT_BACKGROUND,
-            }}>
-            {msg?.role == 'user' && (
-              <Image
-                src={userDetail?.picture}
-                alt="user image"
-                width={35}
-                height={35}
-                className="rounded-full"
-              />
-            )}
-            <ReactMarkdown className="flex flex-col ">
-              {msg?.content}
-            </ReactMarkdown>
-          </div>
-        ))}
-        {loading && (
-          <div
-            className="p-3 rounded-lg mb-2 flex gap-2 items-center"
-            style={{ backgroundColor: Colors.CHAT_BACKGROUND }}>
-            <Loader className="animate-spin" />
-            <h2>Generating response...</h2>
-          </div>
+  {Array.isArray(messages) && messages.length > 0 ? (
+    messages.map((msg, index) => (
+      <div
+        key={index}
+        className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7"
+        style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
+      >
+        {msg?.role === 'user' && (
+          <Image
+            src={userDetail?.picture}
+            alt="user image"
+            width={35}
+            height={35}
+            className="rounded-full"
+          />
         )}
+        <ReactMarkdown className="flex flex-col">
+          {msg?.content}
+        </ReactMarkdown>
       </div>
+    ))
+  ) : (
+    <p>No messages available.</p> // You can show a fallback message here
+  )}
+  {loading && (
+    <div
+      className="p-3 rounded-lg mb-2 flex gap-2 items-center"
+      style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
+    >
+      <Loader className="animate-spin" />
+      <h2>Generating response...</h2>
+    </div>
+  )}
+</div>
+
 
       {/* // Input section */}
 
