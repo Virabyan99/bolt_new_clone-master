@@ -18,6 +18,8 @@ import { useParams } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react'
 import { countToken } from './ChatView'
 import { UserDetailContext } from '@/context/UserDetailContext'
+import SandpackPreviewClient from './SandpackPreviewClient'
+import { ActionContext } from '@/context/ActionContext'
 const CodeView = () => {
   const { id } = useParams()
   const { userDetail, setUserDetail } = useContext(UserDetailContext)
@@ -28,12 +30,17 @@ const CodeView = () => {
   const convex = useConvex()
   const [loading, setLoading] = useState(false)
   const UpdateTokens = useMutation(api.users.UpdateToken)
+  const {action, setAction} = useContext(ActionContext)
 
 
 
   useEffect(() => {
     id && GetFiles()
   }, [id])
+
+  useEffect(() => {
+    setActiveTab('preview')
+  },[action])
 
   const GetFiles = async () => {
     setLoading(true)
@@ -119,7 +126,7 @@ const CodeView = () => {
             </>
           ) : (
             <>
-              <SandpackPreview style={{ height: '80vh' }} showNavigator />
+            <SandpackPreviewClient/>
             </>
           )}
         </SandpackLayout>
